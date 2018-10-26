@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-var uri = ProcessingInstruction.env.MONGODB_URI || 'mongodb://localhost/my-blog';
-mongoose.connect(uri)
+var uri = process.env.MONGODB_URI || 'mongodb://localhost/my-blog';
+mongoose.connect(uri, {useNewUrlParser: true});
 mongoose.Promise = Promise;
 
 // set db to the default connection
