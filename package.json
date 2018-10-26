@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
-    "express": "^4.15.4"
+    "express": "^4.16.4",
+    "mongoose": "^5.3.6"
   },
   "devDependencies": {
     "mocha": "^3.5.0",
