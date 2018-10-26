@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-var uri: ProcessingInstruction.env.MONGODB_URI || 'mongodb://localhost/my-blog';
+var uri = ProcessingInstruction.env.MONGODB_URI || 'mongodb://localhost/my-blog';
 mongoose.connect(uri)
 mongoose.Promise = Promise;
 
