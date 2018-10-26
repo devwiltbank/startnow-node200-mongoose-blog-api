@@ -22,42 +22,42 @@ router.get('/featured', (req, res) => {
 router.get('/:id', (req, res) => {
     Blog    
         .findById(req.params.id)
-        .then(users => (users ? (res.status(200).json(users)) : res.status(404).send('Not Found')))
+        .then(users => (users ? (res.status(200).json(users)) : res.status(404).send('Can\'t find that')))
 });
 
 router.post('/', (req, res) => {
-    let theUser;
-    let newBlog = new Blog(req.body);
-
-    User
-        .findById(req.body.author)
-        .then(user => {
-            theUser = user;
-            newBlog.author = user._id;
-            return newBlog.save();
-        })
-        .then(blog => {
-            theUser.blogs.push(blog);
-            theUser
-                .save()
-                .then(() => res.status(201).send(blog))
-        });
-
-    
-    // let dbUser = null;
-    // User 
-    //     .findById(req.query.userId)
+    // Both versions of this route do work.
+    // let theUser;
+    // let newBlog = new Blog(req.body);
+    // User
+    //     .findById(req.body.author)
     //     .then(user => {
-    //         dbUser = user;
-    //         const newBlog = new Blog(req.body);
+    //         theUser = user;
     //         newBlog.author = user._id;
     //         return newBlog.save();
     //     })
     //     .then(blog => {
-    //         dbUser.blogs.push(blog);
-    //         dbUser.save().then(() => res.status(201).json(blog));
-    //     })
-    //     .catch(err => res.status(500).send());
+    //         theUser.blogs.push(blog);
+    //         theUser
+    //             .save()
+    //             .then(() => res.status(201).send(blog))
+    //     });
+
+    
+    let dbUser = null;
+    User 
+        .findById(req.body.author)
+        .then(user => {
+            dbUser = user;
+            const newBlog = new Blog(req.body);
+            newBlog.author = user._id;
+            return newBlog.save();
+        })
+        .then(blog => {
+            dbUser.blogs.push(blog);
+            dbUser.save().then(() => res.status(201).json(blog));
+        })
+        .catch(err => res.status(500).send());
 });
 
 router.put('/:id', (req, res) => {
